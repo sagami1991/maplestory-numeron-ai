@@ -134,12 +134,33 @@ var NumeronAI = /** @class */ (function () {
             return tmpJugde.isEqual(judge);
         });
     };
-    NumeronAI.prototype.decideCallNumber = function () {
-        var _this = this;
-        var entropies = this.candicate.map(function (numbers) { return NumeronCommon.calcEntropy(numbers, _this.candicate); });
-        var max = Math.max.apply(Math, entropies);
-        var index = entropies.findIndex(function (entropy) { return entropy === max; });
-        return this.candicate[index];
+    /**
+     * CANDICATE→正解候補から、エントロピーが一番大きいものを選ぶ
+     * ALL_CANDICATE→全候補から、エントロピーが一番大きいものを選ぶ
+     */
+    NumeronAI.prototype.decideCallNumber = function (sampleMode) {
+        if (sampleMode === void 0) { sampleMode = "ALL_CANDICATE"; }
+        var candicate;
+        if (sampleMode === "CANDICATE") {
+            candicate = this.candicate;
+        }
+        else {
+            // 情報量高いものを取得したいため、候補じゃないものも混ぜる。
+            candicate = this.candicate.concat(this.allCandicate);
+        }
+        if (this.candicate.length === 0) {
+            return undefined;
+        }
+        var map = new Map();
+        for (var _i = 0, candicate_1 = candicate; _i < candicate_1.length; _i++) {
+            var numbers = candicate_1[_i];
+            var entropy = NumeronCommon.calcEntropy(numbers, this.candicate);
+            if (!map.has(entropy)) {
+                map.set(entropy, numbers);
+            }
+        }
+        var maxEntropy = Math.max.apply(Math, Array.from(map.keys()));
+        return map.get(maxEntropy);
     };
     return NumeronAI;
 }());

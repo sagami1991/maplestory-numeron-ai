@@ -128,11 +128,30 @@ class NumeronAI {
         });
     }
 
-    public decideCallNumber() {
-        const entropies = this.candicate.map((numbers) => NumeronCommon.calcEntropy(numbers, this.candicate));
-        const max = Math.max(...entropies);
-        const index = entropies.findIndex(entropy => entropy === max);
-        return this.candicate[index];
+    /**
+     * CANDICATE→正解候補から、エントロピーが一番大きいものを選ぶ
+     * ALL_CANDICATE→全候補から、エントロピーが一番大きいものを選ぶ
+     */
+    public decideCallNumber(sampleMode: "ALL_CANDICATE" | "CANDICATE" = "ALL_CANDICATE") {
+        let candicate: number[][];
+        if (sampleMode === "CANDICATE") {
+            candicate = this.candicate;
+        } else {
+            // 情報量高いものを取得したいため、候補じゃないものも混ぜる。
+            candicate = [...this.candicate, ...this.allCandicate];
+        }
+        if (this.candicate.length === 0) {
+            return undefined;
+        }
+        const map: Map<number, number[]> = new Map();
+        for (const numbers of candicate) {
+            const entropy = NumeronCommon.calcEntropy(numbers, this.candicate);
+            if (!map.has(entropy)) {
+                map.set(entropy, numbers);
+            }
+        }
+        const maxEntropy = Math.max(...Array.from(map.keys()));
+        return map.get(maxEntropy);
     }
 
 }
