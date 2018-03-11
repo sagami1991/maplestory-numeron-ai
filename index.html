@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>メイプルストーリー 名探偵ゲームD暗号探索AIくん</title>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script async src="./main.js"></script>
+</head>
+
+<body>
+    <h1>名探偵ゲームD暗号探索AIくん</h1>
+    <div>
+        <div>数字:
+            <input type="number" id="number" value="123"maxlength="3" style="width:100px">
+        </div>
+        <div>〇:
+            <input type="number" id="current" value="0" style="width:30px">
+        </div>
+        <div>△:
+            <input type="number" id="exist" value="0" style="width:30px">
+        </div>
+        <div>
+            <button id="culculate">計算</button>
+            <button id="reset">リセット</button>
+        </div>
+    </div>
+    <div style="margin-top:20px;">
+        <b>次に入力すべき数字：</b>
+    </div>
+    <div id="expected-number" style="font-size:16px; border: 1px solid gray; height: 100px; width: 400px;"></div>
+    <div style="margin-top:20px;">
+        <b>ログ</b>
+    </div>
+    <textarea id="log" readonly style="border: 1px solid gray; height: 400px; width: 400px;"></textarea>
+</body>
+
+</html>
