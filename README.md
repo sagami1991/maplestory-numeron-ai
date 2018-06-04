@@ -2,6 +2,6 @@
 
 
 ヌメロンに似たゲームの計算機  
-https://socket1016.github.io/maplestory-numeron-ai/index.html  
+https://sagami1991.github.io/maplestory-numeron-ai/index.html  
 
 ![alt](./maple_numeron.png)  
